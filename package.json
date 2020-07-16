@@ -1,0 +1,22 @@
+{
+  "name": "anime-editor",
+  "version": "1.0.0",
+  "description": "Robots that edit animes to make them good",
+  "main": "preprocess.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LReiz/Anime-Editor.git"
+  },
+  "author": "Leo Reis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LReiz/Anime-Editor/issues"
+  },
+  "homepage": "https://github.com/LReiz/Anime-Editor#readme"
+}
