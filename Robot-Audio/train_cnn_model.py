@@ -3,8 +3,8 @@ import numpy as np
 import tensorflow.keras as keras
 import json
 
-SAVED_MODEL_PATH = "Robot-Audio/model.json"
-SAVED_WEGHTS_PATH = "Robot-Audio/model_weights.h5"
+SAVED_MODEL_PATH = "Robot-Audio/model/model.json"
+SAVED_WEGHTS_PATH = "Robot-Audio/model/model_weights.h5"
 
 def prepare_datasets(x, y, test_size, validation_size):
 
