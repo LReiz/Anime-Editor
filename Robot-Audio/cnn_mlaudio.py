@@ -38,16 +38,20 @@ def use_model(model, json_audio_path, json_audio_to_analyze_path):
         audio_to_analyze = json.load(json_data)
 
     inputs = np.array(audio_to_analyze["mfccs"])
-    labels = np.array(audio_to_analyze["labels"])
+    labels = np.array(audio_to_analyze["labels"]).tolist()
 
     for segment_index in range(len(inputs)):
         class_index = predict_segment_of_audio(model, inputs[segment_index])
-        labels[segment_index] = class_index
-        print(classes[class_index])
+        if(class_index > -1):
+            labels[segment_index] = classes[class_index][0]
+            print(classes[class_index][0])
+        else:
+            labels[segment_index] = "None"
+            print("None")
 
     data = {
         "mfccs": inputs.tolist(),
-        "labels": labels.tolist()
+        "labels": labels
     }
     preprocessaudio.save_audio_data(json_audio_to_analyze_path, data)
     print("Anime Audio Classified")
