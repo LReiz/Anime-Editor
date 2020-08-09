@@ -108,4 +108,4 @@ async function main() {
     await separateVideoFrames();
 }
 
-main()
+main();

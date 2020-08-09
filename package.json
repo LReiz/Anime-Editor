@@ -2,7 +2,7 @@
   "name": "anime-editor",
   "version": "1.0.0",
   "description": "Robots that edit animes to make them good",
-  "main": "preprocess.js",
+  "main": "Robot-Showman/remakeanime.js",
   "directories": {
     "test": "test"
   },

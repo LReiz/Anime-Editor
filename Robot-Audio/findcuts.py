@@ -24,7 +24,6 @@ def group_audio_segments():
     cleaned_audio_segments_labels = clean_labels_array(audio_segments_labels)
     grouped_audio_labels = find_groups_in_array(cleaned_audio_segments_labels)
 
-    print(grouped_audio_labels)
     save_cuts(grouped_audio_labels)
     
 
@@ -67,7 +66,6 @@ def find_groups_in_array(array):
     check_array = [False]*len(array)
 
     for label in LABELS_WEIGHTS.keys():
-        print(label)
         for segment_index in range(len(array)):
             if label == "None":
                 continue
@@ -100,18 +98,12 @@ def save_cuts(array):
             last_end = end
             if array[end] != array[start] or end == len(array)-1:
                 duration = end - start
-                start_minutes = str(int(start / 60)).zfill(2)
-                start_seconds = str(start % 60).zfill(2)
-                duration_minutes = str(int(duration / 60)).zfill(2)
-                duration_seconds = str(duration % 60).zfill(2)
-                cuts_data["cut_strings"].append("00:{}:{} -t 00:{}:{}"
-                                                .format(start_minutes, start_seconds,
-                                                duration_minutes, duration_seconds))
+                cuts_data["cut_strings"].append("{} -t {}".format(start, duration))
                 cuts_data["cut_labels"].append(array[start])
                 break
+
 
     with open(JSON_AUDIO_FINAL_CUTS, "w") as json_path_data:
         json.dump(cuts_data, json_path_data, indent=3)
         
-
 group_audio_segments()
