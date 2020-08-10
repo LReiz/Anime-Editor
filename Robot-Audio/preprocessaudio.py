@@ -18,7 +18,6 @@ def preprocess_dataset_audio(json_path, n_mfcc=NUMBER_OF_MFCCS, n_fft=2048, hop_
 
     for i, (dirpath, dirnames, filenames) in enumerate(os.walk(AUDIO_DATASET_PATH)):
         numSamplesPerSegment = int(SECONDS_PER_SEGMENT*SAMPLE_RATE)
-
         if dirpath is not AUDIO_DATASET_PATH:
             # create class based on actul directory name
             className = dirpath.split("\\")[-1]

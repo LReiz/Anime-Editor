@@ -106,4 +106,3 @@ def save_cuts(array):
     with open(JSON_AUDIO_FINAL_CUTS, "w") as json_path_data:
         json.dump(cuts_data, json_path_data, indent=3)
         
-group_audio_segments()

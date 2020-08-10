@@ -8,8 +8,8 @@ JSON_AUDIO_PATH = "Robot-Audio/json-docs/processed-audio-data.json"
 JSON_AUDIO_TO_ANALYZE_PATH = "Robot-Audio/json-docs/processed-anime-audio-data.json"
 
 # set to False if you want to process/train
-AUDIO_PROCESSED = True
-MODEL_TRAINED = True
+AUDIO_PROCESSED = False
+MODEL_TRAINED = False
 
 
 if __name__ == "__main__":
@@ -19,8 +19,6 @@ if __name__ == "__main__":
 
     if not MODEL_TRAINED:
         train_cnn_model.train_model(JSON_AUDIO_PATH)        # CNN model
-        # or 
-        # mlaudio.train_model(JSON_AUDIO_PATH)                # Multilayer Perceptron
         MODEL_TRAINED = True
 
     # USE MODEL ---------------------------------------

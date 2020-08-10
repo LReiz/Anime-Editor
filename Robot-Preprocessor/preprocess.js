@@ -1,6 +1,5 @@
 const fs = require("fs")
 const util = require("util");
-const { Console } = require("console");
 const exec = util.promisify(require("child_process").exec);
 
 const ANIME_MAIN_DIR = "animes-to-edit/";
@@ -9,26 +8,34 @@ const TEMP_AUDIOS_DIR = "temp/audios-to-analyze/";
 const TEMP_VIDEOS_DIR = "temp/videos-to-analyze/";
 
 async function createTemporaryFolders() {
+    console.log("Creating temporary folders...");
+    try {
+        fs.mkdirSync(`temp/`);
+    } catch(error) {
+        console.log("Temporary folder not created: " + error);
+    }
+
     try {
         fs.mkdirSync(`${TEMP_FRAMES_DIR}`);
     } catch(error) {
-        console.log("Temporary folders not created: " + error);
+        console.log("Temporary folder not created: " + error);
     }
 
     try {
         fs.mkdirSync(`${TEMP_AUDIOS_DIR}`);
     } catch(error) {
-        console.log("Temporary folders not created: " + error);
+        console.log("Temporary folder not created: " + error);
     }
 
     try {
         fs.mkdirSync(`${TEMP_VIDEOS_DIR}`);
     } catch(error) {
-        console.log("Temporary folders not created: " + error);
+        console.log("Temporary folder not created: " + error);
     }
 }
 
 async function extractAudiosFromVideos() {
+
     let animesToEdit = fs.readdirSync(`${ANIME_MAIN_DIR}`);
     let audiosToAnalyze = fs.readdirSync(`${TEMP_AUDIOS_DIR}`);
     let audioAlreadyExists = false;
@@ -45,10 +52,10 @@ async function extractAudiosFromVideos() {
         }
 
         if(!audioAlreadyExists) {
-            console.log(`Extracting audio from ${videoString}`)
+            console.log(`Extracting audio from ${videoString}`);
             await exec(`ffmpeg -i ${ANIME_MAIN_DIR}"${videoString}" -vn -ab 128 ${TEMP_AUDIOS_DIR}"${audioString}".mp3`);
         }
-        console.log(`Audio extracted from ${videoString} successfully`)
+        console.log(`Audio extracted from ${videoString} successfully`);
     }
 }
 
@@ -81,6 +88,7 @@ async function reduceVideoFPS() {
         let videoString = videosToReduceFPS[i];
 
         if(videoString.slice(0, 5) != "fps1") {
+            console.log("Creating lower fps anime version...");
             await exec(`ffmpeg -i ${TEMP_VIDEOS_DIR}${videoString} -filter:v fps=fps=1 "${TEMP_VIDEOS_DIR}fps1${videoString}"`);
         }
     }
@@ -93,6 +101,7 @@ async function separateVideoFrames() {
         let videoString = videosToSeparateFrames[i];
 
         if(videoString.slice(0, 4) == "fps1") {
+            console.log("Extracting frames from anime video...");
             await exec(`ffmpeg -i ${TEMP_VIDEOS_DIR}${videoString} ${TEMP_FRAMES_DIR}%d.png`);
         }
 
@@ -100,6 +109,7 @@ async function separateVideoFrames() {
 }
 
 async function main() {
+    console.log("Robot: Preprocessor");
 
     await createTemporaryFolders();
     await extractAudiosFromVideos();
@@ -108,4 +118,4 @@ async function main() {
     await separateVideoFrames();
 }
 
-main();
+module.exports = main

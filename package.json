@@ -2,7 +2,7 @@
   "name": "anime-editor",
   "version": "1.0.0",
   "description": "Robots that edit animes to make them good",
-  "main": "Robot-Showman/remakeanime.js",
+  "main": "Robot-Megazord/main.js",
   "directories": {
     "test": "test"
   },
