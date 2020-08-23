@@ -35,7 +35,8 @@ async function cutAudio() {
     for(i = 0; i < cut_strings.length; i++) {
         if(cut_labels[i] == "None") {
             console.log("Cutting anime audio...");
-            await exec(`ffmpeg -i ${ANIME_AUDIO_PATH}${audioToCut[0]} -ss ${cut_strings[i]} ${TEMP_AUDIOS_CUTS_PATH}cut${i}.mp3`);
+            let cutID = ("0000" + i).slice(-5)
+            await exec(`ffmpeg -i ${ANIME_AUDIO_PATH}${audioToCut[0]} -ss ${cut_strings[i]} ${TEMP_AUDIOS_CUTS_PATH}cut${cutID}.mp3`);
         }
     }
 }
@@ -57,7 +58,8 @@ async function substituteAudio() {
             memeCutStartSecond = Math.floor(Math.random() * (MEMES_AUDIO_DURATION - cutDuration));
 
             console.log("Substituting audio cuts...");
-            await exec(`ffmpeg -i ${memeAudioPath} -ss ${memeCutStartSecond} -t ${cutDuration} ${TEMP_AUDIOS_CUTS_PATH}cut${i}.mp3`);
+            let cutID = ("0000" + i).slice(-5)
+            await exec(`ffmpeg -i ${memeAudioPath} -ss ${memeCutStartSecond} -t ${cutDuration} ${TEMP_AUDIOS_CUTS_PATH}cut${cutID}.mp3`);
         }
     }
 }
@@ -68,18 +70,7 @@ function getCutDuration(cutString) {
     return duration
 }
 
-async function joinAudioCuts() {
-    audiosToConcat = "concat:"
-    audioCuts = fs.readdirSync(TEMP_AUDIOS_CUTS_PATH);
 
-    for(i = 0; i < audioCuts.length; i++) {
-        audiosToConcat += `${TEMP_AUDIOS_CUTS_PATH}${audioCuts[i]}|`
-    }
-
-    console.log("Joining cuts...");
-    await exec(`ffmpeg -i "${audiosToConcat}" ${FINAL_AUDIO_PATH}finalaudio.mp3`);
-    console.log("Final audio done!");
-}
 
 async function main() {
     console.log("Robot: Edit Audio");
@@ -87,7 +78,8 @@ async function main() {
     await createTempFolders();
     await cutAudio();
     await substituteAudio();
-    await joinAudioCuts();
+
 }
+
 
 module.exports = main

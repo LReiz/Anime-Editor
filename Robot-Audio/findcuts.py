@@ -73,13 +73,14 @@ def find_groups_in_array(array):
                 check_array[segment_index] = True
                 segments_to_substitute = []
                 for off_set in range(1, LABELS_WEIGHTS[label]+1):
-                    if array[segment_index + off_set] == array[segment_index]:
-                        for index in segments_to_substitute:
-                            array[index] = label
-                            check_array[index] = True
-                        break
-                    if check_array[segment_index + off_set == True]:
-                        break
+                    if segment_index + off_set < len(array):
+                        if array[segment_index + off_set] == array[segment_index]:
+                            for index in segments_to_substitute:
+                                array[index] = label
+                                check_array[index] = True
+                            break
+                        if check_array[segment_index + off_set] == True:
+                            break
                     segments_to_substitute.append(segment_index+off_set)
     return array
 

@@ -81,6 +81,16 @@ async function convertVideosToMp4() {
     }
 }
 
+async function setFrameRateTo30FPS() {
+    console.log("Convertendo o frame rate do anime para 30 fps...")
+    let oldVideos = fs.readdirSync(`${ANIME_MAIN_DIR}`);
+
+    for(let i = 0; i < oldVideos.length; i++) {
+        await exec(`ffmpeg -i ${ANIME_MAIN_DIR}${oldVideos[i]} -filter:v fps=fps=30 ${ANIME_MAIN_DIR}30FPS${oldVideos[i]}`);
+        fs.unlinkSync(`${ANIME_MAIN_DIR}${oldVideos[i]}`);
+    }
+}
+
 async function reduceVideoFPS() {
     let videosToReduceFPS = fs.readdirSync(`${TEMP_VIDEOS_DIR}`);
 
@@ -114,6 +124,7 @@ async function main() {
     await createTemporaryFolders();
     await extractAudiosFromVideos();
     await convertVideosToMp4();
+    await setFrameRateTo30FPS();
     await reduceVideoFPS();
     await separateVideoFrames();
 }

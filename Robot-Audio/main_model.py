@@ -8,8 +8,8 @@ JSON_AUDIO_PATH = "Robot-Audio/json-docs/processed-audio-data.json"
 JSON_AUDIO_TO_ANALYZE_PATH = "Robot-Audio/json-docs/processed-anime-audio-data.json"
 
 # set to False if you want to process/train
-AUDIO_PROCESSED = False
-MODEL_TRAINED = False
+AUDIO_PROCESSED = True
+MODEL_TRAINED = True
 
 
 if __name__ == "__main__":
