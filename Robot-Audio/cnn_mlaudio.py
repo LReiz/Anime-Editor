@@ -11,7 +11,7 @@ def predict_segment_of_audio(model, input_segment):
     prediction = model.predict(input_segment)
 
     predicted_index = np.argmax(prediction, axis=1)
-    if prediction[0][predicted_index] >= 0.6:
+    if prediction[0][predicted_index] >= 0.8:
         return predicted_index
     else:
         return -1

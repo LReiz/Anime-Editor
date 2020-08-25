@@ -64,7 +64,7 @@ async function main() {
     await joinVideoFrames();
     await makeEditedAnimesFolder();
     await joinAudioAndVideo();
-    await deleteTemporaryFolders();
+    // await deleteTemporaryFolders();
     console.log("Edição finalizada!!! Espero que seu anime não seja mais tão ruim. Tentei o meu melhor.")
 }
 

@@ -59,7 +59,9 @@ async function editVideoBasedOnAudio() {
             memeFile = await extractFramesFromMeme(imageFiles, `${MEME_IMAGES_PATH}${cut_labels[index]}/`);
             firstMemeSecond = await findFramesToSubstitute(cut_strings[index]);
             memePath = `${MEME_IMAGES_PATH}${cut_labels[index]}/${memeFile}`;
-            await substituteAudioCut(cut_strings[index], firstMemeSecond, memePath, index);
+
+            if(firstMemeSecond >= 0)
+                await substituteAudioCut(cut_strings[index], firstMemeSecond, memePath, index);
         }
     }
 }
@@ -85,9 +87,11 @@ async function findFramesToSubstitute(cutString) {
     
     for(let i = 0; i < durationAnimeCut*FPS; i++) {
         console.log(`cut - ${i}`);
-        animeImage = await Jimp.read(`${FINAL_VIDEO_FRAMES}${firstAnimeFrame+i+1}.png`);
-        memeImage = await Jimp.read(`${MEME_FRAMES_PATH}${firstMemeFrame+i+1}.png`);
-        drawOnFrame(animeImage, memeImage, `${firstAnimeFrame+i+1}.png`);
+        if(firstMemeFrame >= 0) {
+            animeImage = await Jimp.read(`${FINAL_VIDEO_FRAMES}${firstAnimeFrame+i+1}.png`);
+            memeImage = await Jimp.read(`${MEME_FRAMES_PATH}${firstMemeFrame+i+1}.png`);
+            drawOnFrame(animeImage, memeImage, `${firstAnimeFrame+i+1}.png`);
+        }
 
     }
     
