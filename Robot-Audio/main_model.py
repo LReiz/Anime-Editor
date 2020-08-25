@@ -13,7 +13,7 @@ MODEL_TRAINED = True
 
 
 if __name__ == "__main__":
-    # TRAIN MODEL ----------------------------------------
+    # TRAIN MODEL ---------------------------------------
     if not AUDIO_PROCESSED:
         preprocessaudio.preprocess_dataset_audio(JSON_AUDIO_PATH)
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
         train_cnn_model.train_model(JSON_AUDIO_PATH)        # CNN model
         MODEL_TRAINED = True
 
-    # USE MODEL ------------------------------------------
+    # USE MODEL -----------------------------------------
     if MODEL_TRAINED:
         preprocessaudio.preprocess_audio_to_analyze(JSON_AUDIO_TO_ANALYZE_PATH)
         model = cnn_mlaudio.load_trained_model()
