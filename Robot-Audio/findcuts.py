@@ -7,6 +7,8 @@ JSON_AUDIO_FINAL_CUTS = "Robot-Audio/json-docs/audio-final-cuts.json"
 LABELS_WEIGHTS = {
     "GritoBriga": 1,
     "GritoDesesperoComico": 1,
+    "Risada": 1,
+    "Empolgacao": 2,
     "Choro": 2,
     "Briga": 2,
     "None": 1,

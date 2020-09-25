@@ -34,6 +34,18 @@ async function createTemporaryFolders() {
     }
 }
 
+async function formatVideoName() {
+    let animesToEdit = fs.readdirSync(`${ANIME_MAIN_DIR}`);
+
+    for(let i = 0; i < animesToEdit; i++) {
+        let newAnimeName = animesToEdit[i].split(" ").join("");
+
+        fs.rename(`${ANIME_MAIN_DIR}${animesToEdit[i]}`, `${ANIME_MAIN_DIR}${newAnimeName}`, () => {})
+        console.log(`${ANIME_MAIN_DIR}${animesToEdit[i]}`)
+        console.log(`${ANIME_MAIN_DIR}${newAnimeName}`)
+    }
+}
+
 async function extractAudiosFromVideos() {
 
     let animesToEdit = fs.readdirSync(`${ANIME_MAIN_DIR}`);
@@ -122,11 +134,14 @@ async function main() {
     console.log("Robot: Preprocessor");
 
     await createTemporaryFolders();
+    await formatVideoName();
     await extractAudiosFromVideos();
     await convertVideosToMp4();
     await setFrameRateTo30FPS();
     await reduceVideoFPS();
     await separateVideoFrames();
 }
+
+fs.rename(`animes-to-edit/BokuNoHero E8S2.mp4`, `animes-to-edit/BokuNoHeroE8S2.mp4`, () => {})
 
 module.exports = main

@@ -50,18 +50,24 @@ async function editVideoBasedOnAudio() {
     var { cut_labels } = json_final_audio_cuts;
 
     for(index = 0; index < cut_labels.length; index++) {
-        if(cut_labels[index] == "Choro" && (Math.random() * (100)) < 100) {
-            // substitute video and audio from cut
-            console.log(`Label - ${cut_labels[index]}`);
+        
+        let imageFiles;
+        try {
+            if(Math.random() * 100 < 50) {
+                // substitute video and audio from cut
             
-            imageFiles = fs.readdirSync(`${MEME_IMAGES_PATH}${cut_labels[index]}`);
-
-            memeFile = await extractFramesFromMeme(imageFiles, `${MEME_IMAGES_PATH}${cut_labels[index]}/`);
-            firstMemeSecond = await findFramesToSubstitute(cut_strings[index]);
-            memePath = `${MEME_IMAGES_PATH}${cut_labels[index]}/${memeFile}`;
-
-            if(firstMemeSecond >= 0)
-                await substituteAudioCut(cut_strings[index], firstMemeSecond, memePath, index);
+                imageFiles = fs.readdirSync(`${MEME_IMAGES_PATH}${cut_labels[index]}`);
+                console.log(`Label - ${cut_labels[index]}`);
+                
+                memeFile = await extractFramesFromMeme(imageFiles, `${MEME_IMAGES_PATH}${cut_labels[index]}/`);
+                firstMemeSecond = await findFramesToSubstitute(cut_strings[index]);
+                memePath = `${MEME_IMAGES_PATH}${cut_labels[index]}/${memeFile}`;
+                
+                if(firstMemeSecond >= 0)
+                   await substituteAudioCut(cut_strings[index], firstMemeSecond, memePath, index);
+            }
+        } catch (error) {
+            continue;
         }
     }
 }
@@ -129,7 +135,6 @@ async function main() {
     await extractFramesFromAnime();
     await editVideoBasedOnAudio();
 }
-
 
 
 module.exports = main
